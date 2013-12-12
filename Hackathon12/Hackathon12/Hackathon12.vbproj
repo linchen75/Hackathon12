@@ -151,7 +151,7 @@
     </Compile>
     <Compile Include="DomainObject\Company.vb" />
     <Compile Include="DomainObject\IRepository.vb" />
-    <Compile Include="DomainObject\MockDB.vb" />
+    <Compile Include="DomainObject\MockRepository.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
