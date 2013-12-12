@@ -6,7 +6,7 @@ Namespace DB
         Implements IRepository(Of Company)
 
         Private Shared _companies As New List(Of Company)
-        Private Shared _position As Integer
+        Private Shared LOCKOBJ As Object = New Object()
 
         Private Sub New()
             _companies.Add(New Company(1, "太平保险 Taiping", "太平共享金融服务（上海）有限公司暨中国太平保险集团共享服务中心（以下简称""共享服务中心""）隶属于中国保险行业第一家跨国综合保险金融集团——中国太平保险集团，现有员工1500余人，是一家专业从事金融保险服务的创新型企业。中国太平保险集团（以下简称""中国太平""），是隶属于国务院的国有金融保险集团，原名中国保险（控股）有限公司，2009年6月启用""中国太平""新名。经营区域遍及中国内地、港澳、欧洲、大洋洲、东亚及东南亚等地区。", "http://china.icbdr.com/images/CN/TN/logo-taiping.png"))
@@ -17,8 +17,6 @@ Namespace DB
             _companies.Add(New Company(6, "IHG", "我们的愿景是打造宾客挚爱的杰出酒店，成为世界上最好的公司之一。从全球大都市和渡假胜地的豪华酒店到家庭式旅馆，我们拥有九大优质品牌。所有品牌都各具特色，给顾客提供始终如一、温馨贴心、别具一格和值得信赖的品牌酒店体验。我们的品牌体现了我们对顾客的承诺，而赋予这些品牌生命力的正是我们富有才干和充满热情的员工。我们深谙待客之道。我们提供的工作机会和培训吸引了最出色的酒店管理和营销人才，并为明天的全球酒店业培养更优秀的员工技能。我们企业文化的核心是人人以负责任的态度为工作尽心竭力。", "http://china.icbdr.com/images/CN/TN/logo-ihg.png"))
             _companies.Add(New Company(7, "TCL", "TCL集团股份有限公司是中国最大的、全球性规模经营的消费类电子企业集团之一，旗下拥有四家上市公司：TCL集团（SZ.000100）、TCL多媒体科技（01070 .HK）、TCL通讯科技（02618. HK）、通力电子（01249. HK）。目前，TCL已形成多媒体、通讯、华星光电和TCL家电四大产业集团，以及系统科技事业本部、泰科立集团、新兴业务群、投资业务群、翰林汇公司、房地产六大业务板块。", "http://china.icbdr.com/images/CN/TN/logo-tcl.png"))
             _companies.Add(New Company(8, "宁波 Ningbo", "为持续推进宁波市海外高层人才引进工作，切实加大""3315计划""实施力度，宁波将于2013年5月在美国纽约和硅谷举办""2013年浙江民营资 本与海外人才智力对接活动""，真诚欢迎您来参加此次现场招聘活动。 ", "http://china.icbdr.com/images/cn/spot/cnfeatemp/alogo.jpg"))
-
-            _position = 9
         End Sub
 
         Function GetAll() As List(Of Company) Implements IRepository(Of Company).GetAll
@@ -26,8 +24,11 @@ Namespace DB
         End Function
 
         Function Add(ByVal oCompany As Company) As Boolean Implements IRepository(Of Company).Add
-            _companies.Add(oCompany)
-            _position += 1
+            SyncLock (LOCKOBJ)
+                oCompany.Id = _companies.Max(Function(c) c.Id) + 1
+
+                _companies.Add(oCompany)
+            End SyncLock
             Return True
         End Function
     End Class
