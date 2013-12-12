@@ -23,4 +23,16 @@ Namespace DB
 
     End Class
 
+
+    Public Class CompanyRepository
+        Implements IRepository(Of Company)
+
+        Function GetAll() As List(Of Company) Implements IRepository(Of Company).GetAll
+
+        End Function
+        Function Add(ByVal t As Company) As Boolean Implements IRepository(Of Company).Add
+
+        End Function
+    End Class
+
 End Namespace

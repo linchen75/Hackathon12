@@ -149,6 +149,9 @@
     <Compile Include="Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DomainObject\Company.vb" />
+    <Compile Include="DomainObject\IRepository.vb" />
+    <Compile Include="DomainObject\MockDB.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -201,7 +204,9 @@
     <Content Include="Site.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\" />
     <Folder Include="App_Data\" />
+    <Folder Include="PC\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
